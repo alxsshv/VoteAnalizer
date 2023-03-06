@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Loader {
+public class OldLoader {
 
     private static SimpleDateFormat birthDayFormat = new SimpleDateFormat("yyyy.MM.dd");
     private static SimpleDateFormat visitDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
@@ -23,35 +23,33 @@ public class Loader {
     public static void main(String[] args) throws Exception {
         String fileName = "res/data-1M.xml";
 
+
+
         parseFile(fileName);
-//
-//        //Printing results
-//        System.out.println("Voting station work times: ");
-//        for (Integer votingStation : voteStationWorkTimes.keySet()) {
-//            WorkTime workTime = voteStationWorkTimes.get(votingStation);
-//            System.out.println("\t" + votingStation + " - " + workTime);
-//        }
-//
-//        System.out.println("Duplicated voters: ");
-//        for (Voter voter : voterCounts.keySet()) {
-//            Integer count = voterCounts.get(voter);
-//            if (count > 1) {
-//                System.out.println("\t" + voter + " - " + count);
-//            }
-//        }
+
+        //Printing results
+        System.out.println("Voting station work times: ");
+        for (Integer votingStation : voteStationWorkTimes.keySet()) {
+            WorkTime workTime = voteStationWorkTimes.get(votingStation);
+            System.out.println("\t" + votingStation + " - " + workTime);
+        }
+
+        System.out.println("Duplicated voters: ");
+        for (Voter voter : voterCounts.keySet()) {
+            Integer count = voterCounts.get(voter);
+            if (count > 1) {
+                System.out.println("\t" + voter + " - " + count);
+            }
+        }
     }
 
     private static void parseFile(String fileName) throws Exception {
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        SAXParser saxParser = factory.newSAXParser();
-        XMLHandler handler = new XMLHandler();
-        saxParser.parse(new File(fileName),handler);
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        Document doc = db.parse(new File(fileName));
 
-
-
-
-//        findEqualVoters(doc);
-//        fixWorkTimes(doc);
+        findEqualVoters(doc);
+        fixWorkTimes(doc);
     }
 
     private static void findEqualVoters(Document doc) throws Exception {

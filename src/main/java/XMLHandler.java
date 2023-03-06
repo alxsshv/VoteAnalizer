@@ -11,6 +11,7 @@ public class XMLHandler extends DefaultHandler {
     private static SimpleDateFormat birthDayFormat = new SimpleDateFormat("yyyy.MM.dd");
     private Voter voter;
     private final HashMap<Voter, Integer> voterCounts;
+    private final StringBuilder documentBuffer = new StringBuilder();
 
     public XMLHandler(){
         voterCounts = new HashMap<>();
@@ -28,7 +29,6 @@ public class XMLHandler extends DefaultHandler {
         } catch (ParseException e){
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -36,7 +36,14 @@ public class XMLHandler extends DefaultHandler {
         if (qName.equals("voter")){
             voter = null;
         }
+        if (documentBuffer.length() >= 50000){
+            DBConnection.insertVoters;
+            documentBuffer = new StringBuilder();
+
+        }
     }
+
+
 
     public void printDuplicatedVoters(){
         for (Voter voter: voterCounts.keySet()){
@@ -46,4 +53,6 @@ public class XMLHandler extends DefaultHandler {
             }
         }
     }
+
+
 }
