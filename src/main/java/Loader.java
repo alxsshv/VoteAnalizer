@@ -3,8 +3,6 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
@@ -23,7 +21,10 @@ public class Loader {
     public static void main(String[] args) throws Exception {
         String fileName = "res/data-1M.xml";
 
+        long start = System.currentTimeMillis();
         parseFile(fileName);
+
+        System.out.println(System.currentTimeMillis()-start);
 //
 //        //Printing results
 //        System.out.println("Voting station work times: ");
@@ -32,13 +33,9 @@ public class Loader {
 //            System.out.println("\t" + votingStation + " - " + workTime);
 //        }
 //
-//        System.out.println("Duplicated voters: ");
-//        for (Voter voter : voterCounts.keySet()) {
-//            Integer count = voterCounts.get(voter);
-//            if (count > 1) {
-//                System.out.println("\t" + voter + " - " + count);
-//            }
-//        }
+        System.out.println("Duplicated voters: ");
+        DBConnection.printVoterCounts();
+        DBConnection.getConnection().close();
     }
 
     private static void parseFile(String fileName) throws Exception {
@@ -47,28 +44,6 @@ public class Loader {
         XMLHandler handler = new XMLHandler();
         saxParser.parse(new File(fileName),handler);
 
-
-
-
-//        findEqualVoters(doc);
-//        fixWorkTimes(doc);
-    }
-
-    private static void findEqualVoters(Document doc) throws Exception {
-        NodeList voters = doc.getElementsByTagName("voter");
-        int votersCount = voters.getLength();
-        for (int i = 0; i < votersCount; i++) {
-            Node node = voters.item(i);
-            NamedNodeMap attributes = node.getAttributes();
-
-            String name = attributes.getNamedItem("name").getNodeValue();
-            Date birthDay = birthDayFormat
-                .parse(attributes.getNamedItem("birthDay").getNodeValue());
-
-            Voter voter = new Voter(name, birthDay);
-            Integer count = voterCounts.get(voter);
-            voterCounts.put(voter, count == null ? 1 : count + 1);
-        }
     }
 
     private static void fixWorkTimes(Document doc) throws Exception {
