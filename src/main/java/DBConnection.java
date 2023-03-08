@@ -39,11 +39,18 @@ public class DBConnection {
         return connection;
     }
 
+    public static void executeMultiInsertVisits(String visitsRecords) throws SQLException{
+        StringBuilder sql = new StringBuilder();
+                sql.append("INSERT INTO station_visit(station, visitDate, visitTime) VALUES");
+                sql.append(visitsRecords);
+        DBConnection.getConnection().createStatement().execute(sql.toString());
+    }
+
     public static void executeMultiInsertVoters(String votersRecords) throws SQLException{
         StringBuilder sql = new StringBuilder();
-                sql.append("INSERT INTO voter_count(name, birthDate, `count`) VALUES");
-                sql.append(votersRecords);
-                sql.append("ON DUPLICATE KEY UPDATE `count` = `count` + 1");
+        sql.append("INSERT INTO voter_count(name, birthDate, `count`) VALUES");
+        sql.append(votersRecords);
+        sql.append("ON DUPLICATE KEY UPDATE `count` = `count` + 1");
         DBConnection.getConnection().createStatement().execute(sql.toString());
     }
 
@@ -57,5 +64,34 @@ public class DBConnection {
                 rs.getInt("count"));
         }
         rs.close();
+    }
+
+    public static void printStationWorkingTime() throws SQLException {
+        String sql = "SELECT station, visitDate, MIN(visitTime), MAX(visitTime) FROM station_visit" +
+                " GROUP BY station, visitDate ORDER BY station";
+        ResultSet rs = DBConnection.getConnection().createStatement().executeQuery(sql);
+        String station = "-1";
+        StringBuilder builder = new StringBuilder("\t");
+        while(rs.next()) {
+            String string = rs.getString("station");
+            if (!string.equals(station)){
+                System.out.println(builder.toString());
+                builder = new StringBuilder("\t");
+                station = string;
+                builder.append(station);
+                builder.append(" - ");
+            }
+            builder.append(rs.getString("visitDate").replaceAll("-","."));
+            builder.append(" ");
+            builder.append(formatWorkingTime(rs.getString("MIN(visitTime)")));
+            builder.append("-");
+            builder.append(formatWorkingTime(rs.getString("MAX(visitTime)")));
+            builder.append(" ");
+        }
+        System.out.println(builder.toString());
+    }
+
+    private static String formatWorkingTime(String time){
+      return time.substring(0,5);
     }
 }

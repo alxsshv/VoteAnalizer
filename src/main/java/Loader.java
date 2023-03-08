@@ -19,23 +19,19 @@ public class Loader {
     private static HashMap<Voter, Integer> voterCounts = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
-        String fileName = "res/data-1M.xml";
+        String fileName = "res/data-18M.xml";
 
         long start = System.currentTimeMillis();
         parseFile(fileName);
 
         System.out.println(System.currentTimeMillis()-start);
+
+//        System.out.print("Voting station work times: ");
+//        DBConnection.printStationWorkingTime();
 //
-//        //Printing results
-//        System.out.println("Voting station work times: ");
-//        for (Integer votingStation : voteStationWorkTimes.keySet()) {
-//            WorkTime workTime = voteStationWorkTimes.get(votingStation);
-//            System.out.println("\t" + votingStation + " - " + workTime);
-//        }
-//
-        System.out.println("Duplicated voters: ");
-        DBConnection.printVoterCounts();
-        DBConnection.getConnection().close();
+//        System.out.println("Duplicated voters: ");
+//        DBConnection.printVoterCounts();
+//        DBConnection.getConnection().close();
     }
 
     private static void parseFile(String fileName) throws Exception {

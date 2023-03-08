@@ -1,19 +1,21 @@
-public class VoterParseBuffer implements XMLParseBuffer {
+public class VisitParseBuffer implements XMLParseBuffer {
     private StringBuilder builder;
     private int size;
-    public VoterParseBuffer() {
+    public VisitParseBuffer() {
         this.builder = new StringBuilder();
     }
 
-    public void addRecord(String name, String birthDay){
+    public void addRecord(String station, String visitDate, String visitTime){
         if (!builder.isEmpty()){
             builder.append(",");
         }
         builder.append("('");
-        builder.append(name);
+        builder.append(station);
         builder.append("', '");
-        builder.append(birthDay);
-        builder.append("', 1)");
+        builder.append(visitDate);
+        builder.append("', '");
+        builder.append(visitTime);
+        builder.append("')");
         size++;
     }
     public void clear(){

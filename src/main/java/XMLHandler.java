@@ -8,9 +8,9 @@ import java.time.LocalDate;
 
 public class XMLHandler extends DefaultHandler {
     private static SimpleDateFormat birthDayFormat = new SimpleDateFormat("yyyy.MM.dd");
-    private static final int BUFFER_SIZE = 30000;
+    private static final int BUFFER_SIZE = 1000000;
     private final VoterParseBuffer votersBuffer = new VoterParseBuffer();
-    private final VoterParseBuffer visitsBuffer = new VoterParseBuffer();
+    private final VisitParseBuffer visitsBuffer = new VisitParseBuffer();
 
     public XMLHandler(){
         //voterCounts = new HashMap<>();
@@ -20,12 +20,15 @@ public class XMLHandler extends DefaultHandler {
         if (qName.equals("voter")) {
             String name = attributes.getValue("name");
             String birthDay = attributes.getValue("birthDay");
-            votersBuffer.addVoterRecord(name,birthDay);
+            votersBuffer.addRecord(name,birthDay);
         }
-        if (qName.equals("visit")){
-            int station = Integer.parseInt(attributes.getValue("station"));
-            LocalDate visitDate()
-        }
+//        if (qName.equals("visit")){
+//            String station = attributes.getValue("station");
+//            String[] dateTime = attributes.getValue("time").split(" ");
+//            String visitDate = dateTime[0];
+//            String visitTime = dateTime[1];
+//            visitsBuffer.addRecord(station, visitDate, visitTime);
+//        }
     }
 
     @Override
@@ -40,6 +43,16 @@ public class XMLHandler extends DefaultHandler {
                 }
             }
         }
+//        if (qName.equals("visit")) {
+//            if (visitsBuffer.getSize() >= BUFFER_SIZE) {
+//                try {
+//                    DBConnection.executeMultiInsertVisits(visitsBuffer.toString());
+//                    visitsBuffer.clear();
+//                } catch (SQLException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        }
     }
 
     @Override
@@ -52,6 +65,14 @@ public class XMLHandler extends DefaultHandler {
                 throw new RuntimeException(e);
             }
         }
+//        if (!visitsBuffer.isEmpty()){
+//            try {
+//                DBConnection.executeMultiInsertVisits(visitsBuffer.toString());
+//                visitsBuffer.clear();
+//            } catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
     }
 
 
