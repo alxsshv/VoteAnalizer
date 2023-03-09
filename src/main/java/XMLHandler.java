@@ -11,10 +11,17 @@ public class XMLHandler extends DefaultHandler {
     private static final int BUFFER_SIZE = 1000000;
     private final VoterParseBuffer votersBuffer = new VoterParseBuffer();
     private final VisitParseBuffer visitsBuffer = new VisitParseBuffer();
+    private long start;
 
     public XMLHandler(){
         //voterCounts = new HashMap<>();
     }
+
+    @Override
+    public void startDocument() throws SAXException {
+        start = System.currentTimeMillis();
+    }
+
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (qName.equals("voter")) {
@@ -36,6 +43,8 @@ public class XMLHandler extends DefaultHandler {
         if (qName.equals("voter")){
             if (votersBuffer.getSize() >= BUFFER_SIZE){
                 try {
+                    long time = (System.currentTimeMillis() - start)/1000;
+                    System.out.println("Выполняем инсерт, прошло времени " + time + " сек");
                     DBConnection.executeMultiInsertVoters(votersBuffer.toString());
                     votersBuffer.clear();
                 } catch (SQLException e) {

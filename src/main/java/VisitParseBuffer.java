@@ -19,6 +19,7 @@ public class VisitParseBuffer implements XMLParseBuffer {
         size++;
     }
     public void clear(){
+        size = 0;
         builder = new StringBuilder();
     }
 

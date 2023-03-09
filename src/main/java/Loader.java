@@ -19,7 +19,7 @@ public class Loader {
     private static HashMap<Voter, Integer> voterCounts = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
-        String fileName = "res/data-18M.xml";
+        String fileName = "res/data-1572M.xml";
 
         long start = System.currentTimeMillis();
         parseFile(fileName);
@@ -42,21 +42,4 @@ public class Loader {
 
     }
 
-    private static void fixWorkTimes(Document doc) throws Exception {
-        NodeList visits = doc.getElementsByTagName("visit");
-        int visitCount = visits.getLength();
-        for (int i = 0; i < visitCount; i++) {
-            Node node = visits.item(i);
-            NamedNodeMap attributes = node.getAttributes();
-
-            Integer station = Integer.parseInt(attributes.getNamedItem("station").getNodeValue());
-            Date time = visitDateFormat.parse(attributes.getNamedItem("time").getNodeValue());
-            WorkTime workTime = voteStationWorkTimes.get(station);
-            if (workTime == null) {
-                workTime = new WorkTime();
-                voteStationWorkTimes.put(station, workTime);
-            }
-            workTime.addVisitTime(time.getTime());
-        }
-    }
 }

@@ -23,9 +23,8 @@ public class DBConnection {
                     "id INT NOT NULL AUTO_INCREMENT, " +
                     "name TINYTEXT NOT NULL, " +
                     "birthDate DATE NOT NULL, " +
-                    "`count` INT NOT NULL, " +
-                    "PRIMARY KEY(id), " +
-                    "UNIQUE KEY name_date(name(50), birthDate))");
+                    "PRIMARY KEY(id))");
+
                 connection.createStatement().execute("CREATE TABLE station_visit(" +
                     "id INT NOT NULL AUTO_INCREMENT, " +
                     "station INT NOT NULL, " +
@@ -48,11 +47,11 @@ public class DBConnection {
 
     public static void executeMultiInsertVoters(String votersRecords) throws SQLException{
         StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO voter_count(name, birthDate, `count`) VALUES");
+        sql.append("INSERT INTO voter_count(name, birthDate) VALUES");
         sql.append(votersRecords);
-        sql.append("ON DUPLICATE KEY UPDATE `count` = `count` + 1");
         DBConnection.getConnection().createStatement().execute(sql.toString());
     }
+
 
     public static void printVoterCounts() throws SQLException {
         String sql = "SELECT name, birthDate, `count` FROM voter_count WHERE `count` > 1";

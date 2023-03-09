@@ -13,10 +13,11 @@ public class VoterParseBuffer implements XMLParseBuffer {
         builder.append(name);
         builder.append("', '");
         builder.append(birthDay);
-        builder.append("', 1)");
+        builder.append("')");
         size++;
     }
     public void clear(){
+        size = 0;
         builder = new StringBuilder();
     }
 
