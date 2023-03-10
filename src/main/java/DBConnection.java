@@ -78,7 +78,7 @@ public class DBConnection {
         while(rs.next()) {
             String string = rs.getString("station");
             if (!string.equals(station)){
-                System.out.println(builder.toString());
+                System.out.println(builder);
                 builder = new StringBuilder("\t");
                 station = string;
                 builder.append(station);
@@ -91,7 +91,7 @@ public class DBConnection {
             builder.append(formatWorkingTime(rs.getString("MAX(visitTime)")));
             builder.append(" ");
         }
-        System.out.println(builder.toString());
+        System.out.println(builder);
     }
 
     private static String formatWorkingTime(String time){
