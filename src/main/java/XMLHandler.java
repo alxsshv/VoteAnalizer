@@ -29,13 +29,13 @@ public class XMLHandler extends DefaultHandler {
             String birthDay = attributes.getValue("birthDay");
             votersBuffer.addRecord(name,birthDay);
         }
-//        if (qName.equals("visit")){
-//            String station = attributes.getValue("station");
-//            String[] dateTime = attributes.getValue("time").split(" ");
-//            String visitDate = dateTime[0];
-//            String visitTime = dateTime[1];
-//            visitsBuffer.addRecord(station, visitDate, visitTime);
-//        }
+        if (qName.equals("visit")){
+            String station = attributes.getValue("station");
+            String[] dateTime = attributes.getValue("time").split(" ");
+            String visitDate = dateTime[0];
+            String visitTime = dateTime[1];
+            visitsBuffer.addRecord(station, visitDate, visitTime);
+        }
     }
 
     @Override
@@ -43,8 +43,7 @@ public class XMLHandler extends DefaultHandler {
         if (qName.equals("voter")){
             if (votersBuffer.getSize() >= BUFFER_SIZE){
                 try {
-                    long time = (System.currentTimeMillis() - start)/1000;
-                    System.out.println("Выполняем инсерт, прошло времени " + time + " сек");
+                    System.out.print(".");
                     DBConnection.executeMultiInsertVoters(votersBuffer.toString());
                     votersBuffer.clear();
                 } catch (SQLException e) {
@@ -52,16 +51,16 @@ public class XMLHandler extends DefaultHandler {
                 }
             }
         }
-//        if (qName.equals("visit")) {
-//            if (visitsBuffer.getSize() >= BUFFER_SIZE) {
-//                try {
-//                    DBConnection.executeMultiInsertVisits(visitsBuffer.toString());
-//                    visitsBuffer.clear();
-//                } catch (SQLException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        }
+        if (qName.equals("visit")) {
+            if (visitsBuffer.getSize() >= BUFFER_SIZE) {
+                try {
+                    DBConnection.executeMultiInsertVisits(visitsBuffer.toString());
+                    visitsBuffer.clear();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     @Override
@@ -74,14 +73,14 @@ public class XMLHandler extends DefaultHandler {
                 throw new RuntimeException(e);
             }
         }
-//        if (!visitsBuffer.isEmpty()){
-//            try {
-//                DBConnection.executeMultiInsertVisits(visitsBuffer.toString());
-//                visitsBuffer.clear();
-//            } catch (SQLException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
+        if (!visitsBuffer.isEmpty()){
+            try {
+                DBConnection.executeMultiInsertVisits(visitsBuffer.toString());
+                visitsBuffer.clear();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 

@@ -1,4 +1,4 @@
-public class VisitParseBuffer implements XMLParseBuffer {
+public class VisitParseBuffer {
     private StringBuilder builder;
     private int size;
     public VisitParseBuffer() {

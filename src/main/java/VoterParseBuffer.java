@@ -1,4 +1,4 @@
-public class VoterParseBuffer implements XMLParseBuffer {
+public class VoterParseBuffer{
     private StringBuilder builder;
     private int size;
     public VoterParseBuffer() {

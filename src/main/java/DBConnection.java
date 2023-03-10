@@ -54,8 +54,9 @@ public class DBConnection {
 
 
     public static void printVoterCounts() throws SQLException {
-        String sql = "SELECT name, birthDate, `count` FROM voter_count WHERE `count` > 1";
+        String sql = "SELECT name, birthDate, COUNT(*) AS `count` FROM voter_count GROUP BY birthDate, name  HAVING `count` > 1";
         ResultSet rs = DBConnection.getConnection().createStatement().executeQuery(sql);
+        System.out.println("Duplicated voters: ");
         while (rs.next()) {
             System.out.println("\t" +
                 rs.getString("name") + " (" +
@@ -65,12 +66,15 @@ public class DBConnection {
         rs.close();
     }
 
+
+
     public static void printStationWorkingTime() throws SQLException {
         String sql = "SELECT station, visitDate, MIN(visitTime), MAX(visitTime) FROM station_visit" +
                 " GROUP BY station, visitDate ORDER BY station";
         ResultSet rs = DBConnection.getConnection().createStatement().executeQuery(sql);
         String station = "-1";
         StringBuilder builder = new StringBuilder("\t");
+        System.out.print("Voting station work times: ");
         while(rs.next()) {
             String string = rs.getString("station");
             if (!string.equals(station)){

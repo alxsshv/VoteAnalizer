@@ -11,6 +11,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/VisitParseBuffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VisitParseBuffer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/VoterParseBuffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/VoterParseBuffer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/XMLHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XMLHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XMLParseBuffer.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,9 +66,16 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Loader">
     <configuration name="Loader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Loader" />
+      <module name="VoteAnalizer" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OldLoader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="OldLoader" />
       <module name="VoteAnalizer" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -76,6 +84,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Loader" />
+        <item itemvalue="Application.OldLoader" />
       </list>
     </recent_temporary>
   </component>

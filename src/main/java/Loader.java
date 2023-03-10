@@ -22,16 +22,18 @@ public class Loader {
         String fileName = "res/data-1572M.xml";
 
         long start = System.currentTimeMillis();
+        System.out.print("Extracting data from a file ...");
         parseFile(fileName);
 
-        System.out.println(System.currentTimeMillis()-start);
+        System.out.println("Extraction time " + ((System.currentTimeMillis()-start)/1000/60) + " minutes");
 
-//        System.out.print("Voting station work times: ");
-//        DBConnection.printStationWorkingTime();
-//
-//        System.out.println("Duplicated voters: ");
-//        DBConnection.printVoterCounts();
-//        DBConnection.getConnection().close();
+
+        System.out.print("Calculate voting station work times ...");
+        DBConnection.printStationWorkingTime();
+
+        System.out.println("Searching duplicated voters ...");
+        DBConnection.printVoterCounts();
+        DBConnection.getConnection().close();
     }
 
     private static void parseFile(String fileName) throws Exception {
